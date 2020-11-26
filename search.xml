@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>滑动冲突监听</title>
+      <link href="2020/11/26/android-scroll-conflict/"/>
+      <url>2020/11/26/android-scroll-conflict/</url>
+      
+        <content type="html"><![CDATA[<p>纵向布局嵌套横向布局出现冲突问题</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">horizentalChildView.setOnTouchListener &#123; _, event -&gt;</span><br><span class="line">            if (event.pointerCount &#x3D;&#x3D; 2) &#123;</span><br><span class="line">                groupView.requestDisallowInterceptTouchEvent(true)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                groupView.requestDisallowInterceptTouchEvent(false)</span><br><span class="line">            &#125;</span><br><span class="line">            false</span><br><span class="line">        &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>但是有可能出现getPointerCount始终返回1的情况，需要通过手动判断移动方向</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">   &#x2F;&#x2F;four variable to save position</span><br><span class="line">private float startX, startY, moveEndX, moveEndY;</span><br><span class="line">...&#123;</span><br><span class="line">    ...</span><br><span class="line">       horizentalChildView.setOnTouchListener(new View.OnTouchListener() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public boolean onTouch(View v, MotionEvent event) &#123;</span><br><span class="line">               if (event.getAction() &#x3D;&#x3D; MotionEvent.ACTION_UP || event.getAction() &#x3D;&#x3D; MotionEvent.ACTION_CANCEL) &#123;</span><br><span class="line">&#x2F;&#x2F;send to fatherview when stop move or just press </span><br><span class="line">                   mBinding.scrollView.requestDisallowInterceptTouchEvent(false);</span><br><span class="line">               &#125; else if (event.getAction() &#x3D;&#x3D; MotionEvent.ACTION_MOVE) &#123;</span><br><span class="line">    &#x2F;&#x2F;record positon when the finger moveing on screen </span><br><span class="line">                   moveEndX &#x3D; event.getX();</span><br><span class="line">                   moveEndY &#x3D; event.getY();</span><br><span class="line">&#x2F;&#x2F;if the x row&#96;s difference bigger than y row&#96;s,means this move is horizental. When the difference is bigger than 150, its a effective move.</span><br><span class="line">                   if ((moveEndY-startY&gt;150||moveEndY-startY&lt;-150)&amp;&amp;(moveEndX-startX&lt;150&amp;&amp;moveEndX-startX&gt;-150))&#123;</span><br><span class="line">                       mBinding.scrollView.requestDisallowInterceptTouchEvent(false);</span><br><span class="line">                   &#125;else &#123;</span><br><span class="line">                       mBinding.scrollView.requestDisallowInterceptTouchEvent(true);</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125; else if (event.getAction() &#x3D;&#x3D; MotionEvent.ACTION_BUTTON_PRESS) &#123;</span><br><span class="line">                   startX &#x3D; event.getX();</span><br><span class="line">                   startY &#x3D; event.getY();</span><br><span class="line">               &#125;</span><br><span class="line">               return false;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AS提示NO Variants</title>
+      <link href="2020/11/26/as-print-no-variants/"/>
+      <url>2020/11/26/as-print-no-variants/</url>
+      
+        <content type="html"><![CDATA[<p>下载开发对应版本的SDK即可</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android Studio 点击run没反应</title>
+      <link href="2020/11/26/as-click-run-no-response/"/>
+      <url>2020/11/26/as-click-run-no-response/</url>
+      
+        <content type="html"><![CDATA[<p>删除.android/dav里面的模拟器即可</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>终端走代理</title>
+      <link href="2020/11/26/konsole-use-proxy/"/>
+      <url>2020/11/26/konsole-use-proxy/</url>
+      
+        <content type="html"><![CDATA[<ol><li>powershell</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env</span>:HTTPS_PROXY=<span class="string">&quot;http://127.0.0.1:1080&quot;</span></span><br><span class="line"><span class="variable">$env</span>:HTTP_PROXY=<span class="string">&quot;http://127.0.0.1:1080&quot;</span></span><br></pre></td></tr></table></figure><ol start="2"><li>Linux</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>apt 安装 android studio</title>
+      <link href="2020/11/26/apt-install-androidstudio/"/>
+      <url>2020/11/26/apt-install-androidstudio/</url>
+      
+        <content type="html"><![CDATA[<p>安装 OpenJDK</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openjdk-11-jdk</span><br></pre></td></tr></table></figure><p>添加 repository</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:maarten-fonville&#x2F;android-studio</span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure><p>安装 AS</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install android-studio</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
